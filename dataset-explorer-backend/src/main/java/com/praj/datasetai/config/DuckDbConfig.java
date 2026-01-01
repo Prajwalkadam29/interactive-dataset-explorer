@@ -1,0 +1,22 @@
+package com.praj.datasetai.config;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import javax.sql.DataSource;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
+
+@Configuration
+public class DuckDbConfig {
+
+    @Value("${duckdb.path}")
+    private String duckdbUrl;
+
+    @Bean
+    public DataSource dataSource() {
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        dataSource.setDriverClassName("org.duckdb.DuckDBDriver");
+        dataSource.setUrl(duckdbUrl);
+        return dataSource;
+    }
+}
