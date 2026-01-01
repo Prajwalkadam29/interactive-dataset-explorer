@@ -20,23 +20,24 @@ public class FileUploadController {
     @PostMapping("/upload")
     public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file) {
         try {
-            // 1. Save file to disk
             Path filePath = storageService.store(file);
 
-            // 2. Clean table name (remove extension and special chars)
-            String tableName = file.getOriginalFilename()
+            // Clean table name (e.g., "sales data.xlsx" -> "sales_data")
+            String originalName = file.getOriginalFilename();
+            String tableName = originalName.substring(0, originalName.lastIndexOf("."))
                     .replaceAll("[^a-zA-Z0-9]", "_")
                     .toLowerCase();
 
-            // 3. Ingest into DuckDB
-            ingestionService.ingestCsv(tableName, filePath);
+            ingestionService.ingestFile(tableName, filePath);
 
             return ResponseEntity.ok(Map.of(
-                    "message", "File uploaded and ingested successfully",
-                    "tableName", tableName
+                    "status", "success",
+                    "message", "File processed successfully",
+                    "tableName", tableName,
+                    "type", originalName.substring(originalName.lastIndexOf(".") + 1)
             ));
         } catch (Exception e) {
-            return ResponseEntity.internalServerError().body("Upload failed: " + e.getMessage());
+            return ResponseEntity.internalServerError().body("Processing failed: " + e.getMessage());
         }
     }
 }
