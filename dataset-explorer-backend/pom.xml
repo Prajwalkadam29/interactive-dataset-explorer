@@ -28,7 +28,7 @@
 	</scm>
 	<properties>
 		<java.version>21</java.version>
-		<langchain4j.version>1.9.1-beta17</langchain4j.version>
+		<langchain4j.version>0.36.2</langchain4j.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -48,6 +48,18 @@
 			<groupId>org.duckdb</groupId>
 			<artifactId>duckdb_jdbc</artifactId>
 			<version>1.4.3.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>dev.langchain4j</groupId>
+			<artifactId>langchain4j</artifactId>
+			<version>${langchain4j.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>dev.langchain4j</groupId>
+			<artifactId>langchain4j-spring-boot-starter</artifactId>
+			<version>${langchain4j.version}</version>
 		</dependency>
 
 		<dependency>
