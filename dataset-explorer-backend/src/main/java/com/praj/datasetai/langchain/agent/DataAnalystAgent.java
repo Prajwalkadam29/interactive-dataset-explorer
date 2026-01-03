@@ -1,7 +1,9 @@
 package com.praj.datasetai.langchain.agent;
 
 import com.praj.datasetai.dto.ChatResponse;
+import dev.langchain4j.service.MemoryId;
 import dev.langchain4j.service.SystemMessage;
+import dev.langchain4j.service.UserMessage;
 import dev.langchain4j.service.spring.AiService;
 
 @AiService
@@ -31,5 +33,6 @@ public interface DataAnalystAgent {
     OUTPUT STRUCTURE:
     Return a structured JSON object matching the 'ChatResponse' schema. Ensure the 'answer' field is helpful and explains the 'why' behind the data.
     """)
-    ChatResponse chat(String userMessage);
+    // Update: Added @MemoryId and @UserMessage annotations
+    ChatResponse chat(@MemoryId String sessionId, @UserMessage String userMessage);
 }
