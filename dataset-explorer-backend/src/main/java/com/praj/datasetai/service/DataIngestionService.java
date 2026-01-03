@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
@@ -15,10 +16,14 @@ import java.nio.file.Path;
 
 @Service
 @Slf4j
-@RequiredArgsConstructor
 public class DataIngestionService {
 
     private final JdbcTemplate jdbcTemplate;
+
+    // Explicitly inject the DuckDB JdbcTemplate
+    public DataIngestionService(@Qualifier("duckdbJdbcTemplate") JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
     public void ingestFile(String tableName, Path filePath) throws IOException {
         String extension = getFileExtension(filePath.toString());
