@@ -38,6 +38,10 @@ public class SqlExecutorTool {
         }
     }
 
+    /*
+    The AI knows the Schema (column names), but it hasn't seen the Data Samples.
+    To help it generate better charts and insights, we should give it one more tool: a getPreview tool.
+    */
     @Tool("Get a preview of the first 5 rows of a table to see sample data")
     public String getPreview(@P("The table name to preview") String tableName) {
         String sql = String.format("SELECT * FROM \"%s\" LIMIT 5", tableName);
